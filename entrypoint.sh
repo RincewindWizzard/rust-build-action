@@ -15,15 +15,12 @@ cargo build --verbose
 cargo test --verbose
 cargo deb --verbose
 
-# Debug
-export
-
 # Create PPA
 echo "$INPUT_GPG_PRIVATE_KEY" | gpg --import
 mkdir -p $PPA_PATH 2>/dev/null
 
 cp ${DEBIAN_PACKAGE_PATH}/*.deb $PPA_PATH/
-cp ppa-deployment-key.pub $PPA_PATH/KEY.gpg
+gpg --export-secret-keys --armor "${INPUT_EMAIL}" > $PPA_PATH/KEY.gpg
 
 cd $PPA_PATH || exit
 
