@@ -8,9 +8,11 @@ RUN apt-get update && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
-RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
+RUN curl  --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
 
-RUN /root/.cargo/bin/cargo install cargo-deb
+ENV PATH="/root/.cargo/bin:${PATH}"
+
+RUN cargo install cargo-deb
 
 COPY entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
