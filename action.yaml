@@ -3,6 +3,13 @@ description: 'Builds a .deb package, amd64, ubuntu'
 branding:
   icon: 'package'
   color: 'orange'
+inputs:
+  gpg-private-key:
+    description: 'GPG private key used for signing'
+    required: true
+  email:
+    description: 'Email used for signing'
+    required: true
 runs:
   using: 'docker'
   image: 'docker://rincewindwizzard/rust-build-action:latest'
