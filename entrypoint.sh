@@ -15,8 +15,11 @@ cargo build --verbose
 cargo test --verbose
 cargo deb --verbose
 
+# Debug
+export
+
 # Create PPA
-echo "$GPG_PRIVATE_KEY" | gpg --import
+echo "$INPUT_GPG_PRIVATE_KEY" | gpg --import
 mkdir -p $PPA_PATH 2>/dev/null
 
 cp ${DEBIAN_PACKAGE_PATH}/*.deb $PPA_PATH/
@@ -29,9 +32,9 @@ gzip -k -f Packages
 
 apt-ftparchive release . > Release
 
-gpg --default-key "${EMAIL}" --clearsign -o - Release > InRelease
-gpg --default-key "${EMAIL}" -abs -o - Release > Release.gpg
-gpg --armor --export "${EMAIL}" > KEY.gpg
+gpg --default-key "${INPUT_EMAIL}" --clearsign -o - Release > InRelease
+gpg --default-key "${INPUT_EMAIL}" -abs -o - Release > Release.gpg
+gpg --armor --export "${INPUT_EMAIL}" > KEY.gpg
 
 
 # TODO: create PPA
