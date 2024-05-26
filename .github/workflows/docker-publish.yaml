@@ -4,6 +4,8 @@ on:
   push:
     branches:
       - main  # Trigger the workflow on push to the main branch
+    tags:
+      - '*'  # Trigger the workflow on push of any tag
 
 jobs:
   build:
@@ -27,7 +29,9 @@ jobs:
         with:
           context: .
           push: true
-          tags: rincewindwizzard/rust-build-action:latest
+          tags: |
+            rincewindwizzard/rust-build-action:latest
+            rincewindwizzard/rust-build-action:${{ github.ref_name }}
 
       - name: Logout from Docker Hub
         run: docker logout
