@@ -4,7 +4,7 @@ branding:
   icon: 'package'
   color: 'orange'
 inputs:
-  gpg-private-key:
+  gpg_private_key:
     description: 'GPG private key used for signing'
     required: true
   email:
@@ -12,5 +12,5 @@ inputs:
     required: true
 runs:
   using: 'docker'
-  image: 'docker://rincewindwizzard/rust-build-action:v7'
+  image: 'docker://rincewindwizzard/rust-build-action:v8'
 

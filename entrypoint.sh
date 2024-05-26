@@ -33,6 +33,3 @@ gpg --default-key "${INPUT_EMAIL}" --clearsign -o - Release > InRelease
 gpg --default-key "${INPUT_EMAIL}" -abs -o - Release > Release.gpg
 gpg --armor --export "${INPUT_EMAIL}" > KEY.gpg
 
-
-# TODO: create PPA
-find
