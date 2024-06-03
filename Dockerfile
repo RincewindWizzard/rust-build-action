@@ -1,4 +1,4 @@
-FROM ubuntu
+FROM bitnami/minideb:latest
 ENV DEBIAN_FRONTEND=noninteractive
 
 RUN apt-get update && \
