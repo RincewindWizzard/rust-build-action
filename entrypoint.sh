@@ -15,6 +15,13 @@ cargo build --verbose
 cargo test --verbose
 cargo deb --verbose
 
+
+# Build documentation
+cd $GITHUB_WORKSPACE
+mkdir -p $PAGES_PATH || true
+mkdocs build --site-dir $PAGES_PATH
+
+
 # Create PPA
 echo "$INPUT_GPG_PRIVATE_KEY" | gpg --import
 mkdir -p $PPA_PATH 2>/dev/null
@@ -33,5 +40,3 @@ gpg --default-key "${INPUT_EMAIL}" --clearsign -o - Release > InRelease
 gpg --default-key "${INPUT_EMAIL}" -abs -o - Release > Release.gpg
 gpg --armor --export "${INPUT_EMAIL}" > KEY.gpg
 
-# Build documentation
-mkdocs build --site-dir $PAGES_PATH
