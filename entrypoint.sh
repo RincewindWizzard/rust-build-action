@@ -20,7 +20,7 @@ cargo doc
 # Add doc to pages
 cd $GITHUB_WORKSPACE
 mkdir -p $PAGES_PATH
-cp -rv target/doc/ $PAGES_PATH
+cp -rv target/doc/* $PAGES_PATH/
 # Add index file with forwarding
 echo '<meta http-equiv="refresh" content="0; url='"$PACKAGE_NAME"'">' > $PAGES_PATH/index.html
 
