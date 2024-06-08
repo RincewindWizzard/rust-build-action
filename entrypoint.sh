@@ -3,6 +3,7 @@ set -eux
 PAGES_PATH="target/gh-pages"
 PPA_PATH="$PAGES_PATH/deb"
 DEBIAN_PACKAGE_PATH="target/debian"
+PACKAGE_NAME=$(cat Cargo.toml | toml2json | jq -r .package.name)
 
 
 ln -s /root/.cargo $HOME/.cargo
@@ -14,15 +15,23 @@ cd $GITHUB_WORKSPACE
 cargo build --verbose
 cargo test --verbose
 cargo deb --verbose
+cargo doc
 
+# Add doc to pages
+cd $GITHUB_WORKSPACE
+mkdir -p $PAGES_PATH
+cp -rv target/doc/ $PAGES_PATH
+# Add index file with forwarding
+echo '<meta http-equiv="refresh" content="0; url='"$PACKAGE_NAME"'">' > $PAGES_PATH/index.html
 
 # Build documentation
-cd $GITHUB_WORKSPACE
-mkdir -p $PAGES_PATH || true
-mkdocs build --site-dir $PAGES_PATH
+#cd $GITHUB_WORKSPACE
+#mkdir -p $PAGES_PATH || true
+#mkdocs build --site-dir $PAGES_PATH
 
 
 # Create PPA
+cd $GITHUB_WORKSPACE
 echo "$INPUT_GPG_PRIVATE_KEY" | gpg --import
 mkdir -p $PPA_PATH 2>/dev/null
 
